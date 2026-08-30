@@ -29,7 +29,7 @@ São nove contêineres: cinco aplicações, dois PostgreSQL, Redis e LocalStack 
 ## Estrutura esperada
 
 ```text
-.
+root/
 ├── docker-compose.yml
 ├── .env
 ├── .env.example
@@ -52,12 +52,6 @@ Cada serviço deve possuir seu próprio `Dockerfile` e `.dockerignore`.
 - AWS CLI v2 (usada somente contra o LocalStack nesta etapa);
 - `curl` ou Postman.
 
-Valide Docker:
-
-```bat
-docker --version
-docker compose version
-```
 
 ## Validação das ferramentas locais
 
@@ -99,7 +93,7 @@ AWS_DYNAMODB_ENDPOINT=http://localstack:4566
 AWS_DYNAMODB_TABLE=ToggleMasterAnalytics
 ```
 
-Não versione `.env`. Mantenha no Git apenas `.env.example`, com os mesmos nomes e valores vazios para os segredos.
+Não versione `.env`. Mantenha no Git apenas `.env.example`, com os mesmos nomes e **valores vazios** para os segredos.
 
 > As credenciais `test` são fictícias. Elas existem somente porque os SDKs AWS exigem valores, mesmo quando o destino é o LocalStack.
 
