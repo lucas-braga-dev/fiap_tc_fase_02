@@ -1,0 +1,51 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: analytics-localstack
+  labels:
+    app.kubernetes.io/name: analytics-service
+    app.kubernetes.io/component: autoscaling
+    app.kubernetes.io/part-of: togglemaster
+spec:
+  secretTargetRef:
+    - parameter: awsAccessKeyID
+      name: togglemaster-secrets
+      key: AWS_ACCESS_KEY_ID
+    - parameter: awsSecretAccessKey
+      name: togglemaster-secrets
+      key: AWS_SECRET_ACCESS_KEY
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: analytics-service
+  labels:
+    app.kubernetes.io/name: analytics-service
+    app.kubernetes.io/component: autoscaling
+    app.kubernetes.io/part-of: togglemaster
+spec:
+  scaleTargetRef:
+    name: analytics-service
+  pollingInterval: 5
+  cooldownPeriod: 60
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  fallback:
+    failureThreshold: 3
+    replicas: 1
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 60
+  triggers:
+    - type: aws-sqs-queue
+      authenticationRef:
+        name: analytics-localstack
+      metadata:
+        queueURL: http://localstack.togglemaster.svc.cluster.local:4566/000000000000/togglemaster-events
+        queueLength: "5"
+        activationQueueLength: "1"
+        awsRegion: us-east-1
+        awsEndpoint: http://localstack.togglemaster.svc.cluster.local:4566
+        scaleOnInFlight: "true"

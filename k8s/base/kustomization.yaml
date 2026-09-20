@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: togglemaster
+
+resources:
+  - namespace.yaml
+  - configmaps/application-config.yaml
+  - configmaps/postgres-init.yaml
+  - serviceaccounts.yaml
+  - infrastructure/postgres-auth.yaml
+  - infrastructure/postgres-config.yaml
+  - infrastructure/redis.yaml
+  - infrastructure/localstack.yaml
+  - infrastructure/localstack-bootstrap-job.yaml
+  - applications/auth-service.yaml
+  - applications/flag-service.yaml
+  - applications/targeting-service.yaml
+  - applications/evaluation-service.yaml
+  - applications/analytics-service.yaml

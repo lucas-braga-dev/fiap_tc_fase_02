@@ -61,6 +61,6 @@ HEALTHCHECK \
     --start-period=10s \
     --retries=3 \
     CMD python -c \
-    "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:' + os.getenv('PORT', '8002') + '/health', timeout=3)"
+    "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:' + os.getenv('PORT', '8003') + '/health', timeout=3)"
 
 CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:${PORT} --workers ${GUNICORN_WORKERS} --threads 2 --timeout 30 --access-logfile - --error-logfile - app:app"]

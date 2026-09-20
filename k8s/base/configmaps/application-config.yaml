@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: togglemaster-config
+  labels:
+    app.kubernetes.io/part-of: togglemaster
+data:
+  AWS_REGION: us-east-1
+  AWS_ENDPOINT_URL: http://localstack:4566
+  AWS_SQS_URL: http://localstack:4566/000000000000/togglemaster-events
+  AWS_DYNAMODB_TABLE: ToggleMasterAnalytics
+  AUTH_SERVICE_URL: http://auth-service:8001
+  FLAG_SERVICE_URL: http://flag-service:8002
+  TARGETING_SERVICE_URL: http://targeting-service:8003
+  REDIS_URL: redis://redis:6379

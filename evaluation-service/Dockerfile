@@ -35,6 +35,6 @@ USER nonroot:nonroot
 
 ENV PORT=8004
 
-EXPOSE 8001
+EXPOSE 8004 
 
 ENTRYPOINT ["/app/service"]
