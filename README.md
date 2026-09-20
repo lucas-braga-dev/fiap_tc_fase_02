@@ -13,9 +13,8 @@ credenciais reais da AWS.
 - [x] fluxo `evaluation -> SQS -> analytics -> DynamoDB` validado;
 - [x] manifests Kubernetes base validados em cluster kind;
 - [x] Secret Kubernetes real mantido fora do Git;
-- [ ] HPA e KEDA: manifests preparados, mas devem ser aplicados somente após a
-  instalação do Metrics Server e do KEDA;
-- [ ] implantação na AWS: etapa posterior.
+- [x] HPA e KEDA: testes de carga e escalabilidade positivos;
+- [x] implantação na AWS: já realizado.
 
 ## Arquitetura
 
