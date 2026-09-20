@@ -92,23 +92,6 @@ services:
     networks:
       - togglemaster-network
 
-  # dynamodb-local:
-  #   image: amazon/dynamodb-local:latest
-  #   container_name: togglemaster-dynamodb
-  #   restart: unless-stopped
-
-  #   command:
-  #     - "-jar"
-  #     - "DynamoDBLocal.jar"
-  #     - "-inMemory"
-  #     - "-sharedDb"
-
-  #   ports:
-  #     - "8000:8000"
-
-  #   networks:
-  #     - togglemaster-network
-
   localstack:
     image: localstack/localstack:3.8
     container_name: togglemaster-localstack
@@ -116,7 +99,7 @@ services:
 
     environment:
       SERVICES: sqs,dynamodb
-      AWS_DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_REGION: ${AWS_REGION:-us-east-1}
 
     ports:
       - "4566:4566"
@@ -228,7 +211,7 @@ services:
 
       AWS_REGION: ${AWS_REGION}
       AWS_SQS_URL: ${AWS_SQS_URL}
-      AWS_ENDPOINT_URL: http://localstack:4566
+      AWS_ENDPOINT_URL: ${AWS_ENDPOINT_URL:-http://localstack:4566}
 
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
@@ -262,13 +245,12 @@ services:
 
       AWS_REGION: ${AWS_REGION}
       AWS_SQS_URL: ${AWS_SQS_URL}
-      AWS_DYNAMODB_TABLE: ToggleMasterAnalytics
-      AWS_DYNAMODB_ENDPOINT: http://dynamodb-local:8000
+      AWS_DYNAMODB_TABLE: ${AWS_DYNAMODB_TABLE:-ToggleMasterAnalytics}
 
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-}
-      AWS_ENDPOINT_URL: http://localstack:4566
+      AWS_ENDPOINT_URL: ${AWS_ENDPOINT_URL:-http://localstack:4566}
 
     ports:
       - "8005:8005"
